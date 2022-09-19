@@ -46,6 +46,12 @@ function main() {
   gl.linkProgram(shaderProgram);
   gl.useProgram(shaderProgram);
 
+  /* 
+    Providing multiple shapes
+    https://github.com/davidwparker/programmingtil-webgl/tree/master/0028-multiple-shapes
+    https://www.youtube.com/watch?v=y2nWmdSHlkU
+
+  */
   function drawA(type, vertices) {
     var n = initBuffers(vertices);
     if (n < 0) {
@@ -78,12 +84,19 @@ function main() {
     return n;
   }
 
+  // Inisialisasi vertices
   var xAxisVertices = new Float32Array([1.0, 0.0, -1.0, 0.0]);
-  var yAxisVertices = new Float32Array([0.0, 1.0, 0.0, -1.0]);
+  var yAxisVertices = new Float32Array([0.0, 0.0, 0.0, -1.0]);
   var twoVertices = new Float32Array([
     -0.25, 0.15, -0.7, 0.15, -0.7, 0.2, -0.75, 0.2, -0.75, 0.45, -0.7, 0.45, -0.7, 0.5, -0.65, 0.5, -0.65, 0.55, -0.4, 0.55, -0.4, 0.7, -0.6, 0.7, -0.6, 0.65, -0.75, 0.65, -0.75, 0.8, -0.7, 0.8, -0.7, 0.85, -0.3, 0.85, -0.3, 0.8, -0.25,
-    0.8, -0.25, 0.45, -0.3, 0.45, -0.3, 0.4, -0.55, 0.4, -0.55, 0.35, -0.6, 0.35, -0.6, 0.3, -0.25, 0.3, -0.25, 0.15,
+    0.8, -0.25, 0.45, -0.3, 0.45, -0.3, 0.4, -0.55, 0.4, -0.55, 0.35, -0.6, 0.35, -0.6, 0.3, -0.25, 0.3,
   ]);
+  var eightVertices = new Float32Array([
+    0.5, 0.15, 0.3, 0.15, 0.3, 0.2, 0.25, 0.2, 0.25, 0.45, 0.3, 0.45, 0.3, 0.55, 0.25, 0.55, 0.25, 0.8, 0.3, 0.8, 0.3, 0.85, 0.7, 0.85, 0.7, 0.8, 0.75, 0.8, 0.75, 0.55, 0.7, 0.55, 0.7, 0.45, 0.75, 0.45, 0.75, 0.2, 0.7, 0.2, 0.7, 0.15, 0.5,
+    0.15, 0.5, 0.25, 0.45, 0.25, 0.45, 0.3, 0.4, 0.3, 0.4, 0.4, 0.45, 0.4, 0.45, 0.45, 0.5, 0.45, 0.5, 0.55, 0.45, 0.55, 0.45, 0.6, 0.4, 0.6, 0.4, 0.7, 0.45, 0.7, 0.45, 0.75, 0.5, 0.75, 0.5, 0.85, 0.5, 0.75, 0.55, 0.75, 0.55, 0.7, 0.6, 0.7,
+    0.6, 0.6, 0.55, 0.6, 0.55, 0.55, 0.5, 0.55, 0.5, 0.45, 0.55, 0.45, 0.55, 0.4, 0.6, 0.4, 0.6, 0.3, 0.55, 0.3, 0.55, 0.25, 0.5, 0.25,
+  ]);
+  var eVertices = new Float32Array([-0.7, -0.15, -0.7, -0.9, -0.55, -0.9]);
 
   gl.clearColor(0.78, 0.078, 0.102, 1.0);
 
@@ -91,5 +104,7 @@ function main() {
 
   drawA(gl.LINES, xAxisVertices);
   drawA(gl.LINES, yAxisVertices);
-  drawA(gl.LINE_STRIP, twoVertices);
+  drawA(gl.LINE_LOOP, twoVertices);
+  drawA(gl.LINE_STRIP, eightVertices);
+  drawA(gl.TRIANGLE_FAN, eVertices);
 }
