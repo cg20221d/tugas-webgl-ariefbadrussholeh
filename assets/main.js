@@ -78,20 +78,13 @@ function main() {
     return n;
   }
 
-  var vertices = new Float32Array([
-    0.5,
-    0.5, // A: kanan atas
-    0.0,
-    0.0, // B: bawah tengah
-    -0.5,
-    0.5, // C: kiri atas
-    0.0,
-    1.0,
-  ]);
+  var xAxisVertices = new Float32Array([1.0, 0.0, -1.0, 0.0]);
+  var yAxisVertices = new Float32Array([0.0, 1.0, 0.0, -1.0]);
 
   gl.clearColor(0.78, 0.078, 0.102, 1.0);
 
   gl.clear(gl.COLOR_BUFFER_BIT);
 
-  drawA(gl.POINTS, vertices);
+  drawA(gl.LINES, xAxisVertices);
+  drawA(gl.LINES, yAxisVertices);
 }
