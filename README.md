@@ -10,6 +10,8 @@
 
 #### Screenshot
 
+![Result](/result.png)
+
 #### Source
 
 - https://www.youtube.com/watch?v=y2nWmdSHlkU (Drawing multiple shapes)
