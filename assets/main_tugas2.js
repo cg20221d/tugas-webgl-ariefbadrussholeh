@@ -230,12 +230,12 @@ function main() {
   function onKeydown(event) {
     if (event.keyCode == 32) freeze = !freeze; // spasi
     // Gerakan horizontal: a ke kiri, d ke kanan
-    if (event.keyCode == 65) {
-      // a
-      horizontalSpeed = -0.01;
-    } else if (event.keyCode == 68) {
-      // d
-      horizontalSpeed = 0.01;
+    if (event.keyCode == 37) {
+      // arrow-kiri
+      theta += -0.02;
+    } else if (event.keyCode == 39) {
+      // arrow-kanan
+      theta += 0.02;
     }
     // Gerakan vertikal: w ke atas, s ke bawah
     if (event.keyCode == 87) {
@@ -260,14 +260,13 @@ function main() {
     //            Merah     Hijau   Biru    Transparansi
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     if (!freeze) {
-      theta += 0.01;
+      // theta += 0.01;
     }
     horizontalDelta += horizontalSpeed;
     verticalDelta -= verticalSpeed;
     var model = glMatrix.mat4.create(); // Membuat matriks identitas
-    glMatrix.mat4.translate(model, model, [0.5, 0.525, 0.0]);
+    // glMatrix.mat4.translate(model, model, [0.5, 0.525, 0.0]);
     glMatrix.mat4.rotateY(model, model, theta);
-    glMatrix.mat4.translate(model, model, [-0.5, -0.525, 0.0]);
     gl.uniformMatrix4fv(uModel, false, model);
     gl.uniformMatrix4fv(uView, false, view);
     gl.uniformMatrix4fv(uProjection, false, perspective);
