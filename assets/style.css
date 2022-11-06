@@ -17,3 +17,12 @@ dt {
 dd {
   margin-bottom: 12px;
 }
+
+.bg-red {
+  background-color: red;
+}
+
+.bg-dark-red {
+  background-color: #c7141a;
+  color: white;
+}
