@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
     <title>Tugas Webgl #2 | Arief Badrus Sholeh</title>
+    <meta name="author" content="Arief Badrus Sholeh" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
+
   <body class="bg-red">
-    <canvas id="kanvas" width="720" height="720"></canvas>
+    <canvas id="glcanvas" width="720" height="720"></canvas>
 
     <section class="bg-dark-red">
       <h1>Tugas Webgl #2</h1>
@@ -20,12 +21,23 @@
         <dd>5025201228</dd>
         <dt>Kelas</dt>
         <dd>Grafika Komputer D</dd>
-        <dt><a href="https://github.com/cg20221d/tugas-webgl-ariefbadrussholeh" style="color: inherit">Link Repository</a></dt>
+        <dt><a href="https://github.com/cg20221d/tugas-webgl-ariefbadrussholeh/tree/main/Tugas_Webgl2" style="color: inherit">Link Repository</a></dt>
       </dl>
     </section>
 
-    <!-- Javascript -->
-    <script src="gl-matrix-min.js"></script>
-    <script src="main.js" type="module"></script>
+    <!-- Shaders -->
+    <script name="shader" data-src="shaders/vertex.glsl" data-type="vertex" data-version="v1"></script>
+    <script name="shader" data-src="shaders/fragment.glsl" data-type="fragment" data-version="v1"></script>
+
+    <!-- Library: Signals processing used for dispatching methods -->
+    <script type="text/javascript" src="vendor/js/signals.js"></script>
+    <script type="text/javascript" src="vendor/js/glMatrix.js"></script>
+
+    <!-- Library: our common libraries -->
+    <script type="text/javascript" src="libs/glUtils.js"></script>
+    <script type="text/javascript" src="libs/uiUtils.js"></script>
+
+    <!-- This is the bulk of the actual WebGL stuff -->
+    <script type="module" src="index.js"></script>
   </body>
 </html>
