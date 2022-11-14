@@ -196,12 +196,14 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
       var mm = mat4.create();
 
       if (!freeze) {
-        if (scaleDelta >= 2.0) scaleDelta *= -1;
-        if (scaleDelta < 0.0) scaleDelta *= -1;
+        if (scaleDelta >= 2.0) scaleSpeed *= -1;
+        if (scaleDelta < 0.0) scaleSpeed *= -1;
         console.log(scaleDelta);
         scaleDelta += scaleSpeed;
       }
       mat4.scale(mm, mm, [scaleDelta, scaleDelta, scaleDelta]);
+      mat4.rotateY(mm, mm, yTheta);
+      mat4.rotateX(mm, mm, xTheta);
       state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
 
       mat4.copy(mvp, state.pm);
@@ -278,9 +280,9 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
   var xTheta = 0.0;
   var horizontalSpeed = 0.0228;
   var horizontalDelta = 0.0;
-  var freeze = false;
+  var freeze = true;
   var scaleSpeed = 0.0228;
-  var scaleDelta = 0.0;
+  var scaleDelta = 3.0;
 
   function updateState() {
     if (state.ui.pressedKeys[37]) {
