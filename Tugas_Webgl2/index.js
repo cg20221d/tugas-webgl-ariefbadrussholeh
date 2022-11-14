@@ -1,4 +1,5 @@
 import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertices_e.js";
+import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertices_h.js";
 
 (function (global) {
   /*
@@ -58,7 +59,52 @@ import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertice
       var scale = 3.0;
       mat4.scale(mm, mm, [scale, scale, scale]);
       mat4.translate(mm, mm, [-1.0, -1.0, 0.0]);
-      mat4.rotateY(mm, mm, theta);
+      mat4.rotateY(mm, mm, yTheta);
+      state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
+
+      mat4.copy(mvp, state.pm);
+      mat4.multiply(mvp, mvp, state.vm);
+      mat4.multiply(mvp, mvp, mm);
+      state.gl.uniformMatrix4fv(uMVPMatrix, false, mvp);
+
+      state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
+    };
+  }
+
+  function LetterH() {
+    this.attributes = {
+      aColor: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(color_vertices_h),
+      },
+      aPosition: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(position_vertices_h),
+      },
+    };
+    this.indices = new Uint8Array(indices_h);
+    this.state = {
+      mm: mat4.create(),
+      nm: null,
+    };
+    this.stride = 0;
+
+    this.draw = function () {
+      var uMVPMatrix = state.gl.getUniformLocation(state.programs[state.program], "uMVPMatrix");
+      var uModelMatrix = state.gl.getUniformLocation(state.programs[state.program], "uModelMatrix");
+      var mvp = state.mvp;
+
+      state.programs[state.program].renderBuffers(this);
+
+      var n = this.indices.length;
+      var mm = mat4.create();
+
+      var scale = 3.0;
+      mat4.scale(mm, mm, [scale, scale, scale]);
+      mat4.translate(mm, mm, [1.0, -1.0, 0.0]);
+      mat4.rotateX(mm, mm, xTheta);
       state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
 
       mat4.copy(mvp, state.pm);
@@ -115,7 +161,7 @@ import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertice
     state.vm = mat4.create();
     state.pm = mat4.create();
     state.mvp = mat4.create();
-    state.app.objects = [new LetterE()];
+    state.app.objects = [new LetterE(), new LetterH()];
   }
 
   /*
@@ -130,20 +176,22 @@ import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertice
     state.animation.tick();
   }
 
-  var theta = 0.0;
+  var yTheta = 0.0;
+  var xTheta = 0.0;
   function updateState() {
     if (state.ui.pressedKeys[37]) {
       // left
-      theta -= 0.05;
+      yTheta -= 0.05;
     } else if (state.ui.pressedKeys[39]) {
       // right
-      theta += 0.05;
-    } else if (state.ui.pressedKeys[40]) {
+      yTheta += 0.05;
+    }
+    if (state.ui.pressedKeys[40]) {
       // down
-      // state.app.eye.y += speed;
+      xTheta += 0.05;
     } else if (state.ui.pressedKeys[38]) {
       // up
-      // state.app.eye.y -= speed;
+      xTheta -= 0.05;
     }
   }
 
