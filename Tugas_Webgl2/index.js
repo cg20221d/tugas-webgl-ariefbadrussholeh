@@ -1,11 +1,10 @@
 import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertices_e.js";
 import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertices_h.js";
+import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertices_2.js";
 
 (function (global) {
   /*
    * Constants and Main
-   * www.programmingtil.com
-   * www.codenameparkerllc.com
    */
   var state = {
     gl: null,
@@ -116,6 +115,58 @@ import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertice
     };
   }
 
+  function Number2() {
+    this.attributes = {
+      aColor: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(color_vertices_h),
+      },
+      aPosition: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(position_vertices_h),
+      },
+    };
+    this.indices = new Uint8Array(indices_h);
+    this.state = {
+      mm: mat4.create(),
+      nm: null,
+    };
+    this.stride = 0;
+
+    this.draw = function () {
+      var uMVPMatrix = state.gl.getUniformLocation(state.programs[state.program], "uMVPMatrix");
+      var uModelMatrix = state.gl.getUniformLocation(state.programs[state.program], "uModelMatrix");
+      var mvp = state.mvp;
+
+      state.programs[state.program].renderBuffers(this);
+
+      var n = this.indices.length;
+      var mm = mat4.create();
+
+      var scale = 3.0;
+      mat4.scale(mm, mm, [scale, scale, scale]);
+      if (!freeze) {
+        if (horizontalDelta >= 1.6) horizontalSpeed *= -1;
+        if (horizontalDelta <= -1.6) horizontalSpeed *= -1;
+        console.log(horizontalDelta);
+        horizontalDelta += horizontalSpeed;
+      }
+      mat4.translate(mm, mm, [horizontalDelta, 1.0, 0.0]);
+      mat4.rotateX(mm, mm, xTheta);
+      mat4.rotateY(mm, mm, yTheta);
+      state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
+
+      mat4.copy(mvp, state.pm);
+      mat4.multiply(mvp, mvp, state.vm);
+      mat4.multiply(mvp, mvp, mm);
+      state.gl.uniformMatrix4fv(uMVPMatrix, false, mvp);
+
+      state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
+    };
+  }
+
   glUtils.SL.init({
     callback: function () {
       main();
@@ -161,7 +212,7 @@ import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertice
     state.vm = mat4.create();
     state.pm = mat4.create();
     state.mvp = mat4.create();
-    state.app.objects = [new LetterE(), new LetterH()];
+    state.app.objects = [new LetterE(), new LetterH(), new Number2()];
   }
 
   /*
@@ -176,8 +227,13 @@ import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertice
     state.animation.tick();
   }
 
+  // Variabel Lokal
   var yTheta = 0.0;
   var xTheta = 0.0;
+  var horizontalSpeed = 0.0228;
+  var horizontalDelta = 0.0;
+  var freeze = true;
+
   function updateState() {
     if (state.ui.pressedKeys[37]) {
       // left
@@ -192,6 +248,10 @@ import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertice
     } else if (state.ui.pressedKeys[38]) {
       // up
       xTheta -= 0.05;
+    }
+    if (state.ui.pressedKeys[32]) {
+      // space
+      freeze = !freeze;
     }
   }
 

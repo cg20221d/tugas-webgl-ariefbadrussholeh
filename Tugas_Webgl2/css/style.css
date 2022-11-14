@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 canvas {
   margin: auto;
   display: block;
@@ -11,6 +16,12 @@ section {
   padding: 16px 32px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
+hr {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 dt {
   font-weight: bold;
 }
