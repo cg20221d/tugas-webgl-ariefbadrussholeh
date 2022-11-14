@@ -120,15 +120,15 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
       aColor: {
         size: 3,
         offset: 0,
-        bufferData: new Float32Array(color_vertices_h),
+        bufferData: new Float32Array(color_vertices_2),
       },
       aPosition: {
         size: 3,
         offset: 0,
-        bufferData: new Float32Array(position_vertices_h),
+        bufferData: new Float32Array(position_vertices_2),
       },
     };
-    this.indices = new Uint8Array(indices_h);
+    this.indices = new Uint8Array(indices_2);
     this.state = {
       mm: mat4.create(),
       nm: null,
@@ -150,12 +150,58 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
       if (!freeze) {
         if (horizontalDelta >= 1.6) horizontalSpeed *= -1;
         if (horizontalDelta <= -1.6) horizontalSpeed *= -1;
-        console.log(horizontalDelta);
+
         horizontalDelta += horizontalSpeed;
       }
       mat4.translate(mm, mm, [horizontalDelta, 1.0, 0.0]);
-      mat4.rotateX(mm, mm, xTheta);
-      mat4.rotateY(mm, mm, yTheta);
+      state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
+
+      mat4.copy(mvp, state.pm);
+      mat4.multiply(mvp, mvp, state.vm);
+      mat4.multiply(mvp, mvp, mm);
+      state.gl.uniformMatrix4fv(uMVPMatrix, false, mvp);
+
+      state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
+    };
+  }
+
+  function Number8() {
+    this.attributes = {
+      aColor: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(color_vertices_2),
+      },
+      aPosition: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(position_vertices_2),
+      },
+    };
+    this.indices = new Uint8Array(indices_2);
+    this.state = {
+      mm: mat4.create(),
+      nm: null,
+    };
+    this.stride = 0;
+
+    this.draw = function () {
+      var uMVPMatrix = state.gl.getUniformLocation(state.programs[state.program], "uMVPMatrix");
+      var uModelMatrix = state.gl.getUniformLocation(state.programs[state.program], "uModelMatrix");
+      var mvp = state.mvp;
+
+      state.programs[state.program].renderBuffers(this);
+
+      var n = this.indices.length;
+      var mm = mat4.create();
+
+      if (!freeze) {
+        if (scaleDelta >= 2.0) scaleDelta *= -1;
+        if (scaleDelta < 0.0) scaleDelta *= -1;
+        console.log(scaleDelta);
+        scaleDelta += scaleSpeed;
+      }
+      mat4.scale(mm, mm, [scaleDelta, scaleDelta, scaleDelta]);
       state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
 
       mat4.copy(mvp, state.pm);
@@ -212,7 +258,7 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
     state.vm = mat4.create();
     state.pm = mat4.create();
     state.mvp = mat4.create();
-    state.app.objects = [new LetterE(), new LetterH(), new Number2()];
+    state.app.objects = [new LetterE(), new LetterH(), new Number2(), new Number8()];
   }
 
   /*
@@ -232,7 +278,9 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
   var xTheta = 0.0;
   var horizontalSpeed = 0.0228;
   var horizontalDelta = 0.0;
-  var freeze = true;
+  var freeze = false;
+  var scaleSpeed = 0.0228;
+  var scaleDelta = 0.0;
 
   function updateState() {
     if (state.ui.pressedKeys[37]) {
