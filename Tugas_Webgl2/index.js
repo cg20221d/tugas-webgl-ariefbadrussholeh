@@ -1,6 +1,7 @@
-import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertices_e.js";
-import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertices_h.js";
-import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertices_2.js";
+import { position_vertices_e, color_vertices_e, indices_e } from "./libs/vertices/vertices_e.js";
+import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertices/vertices_h.js";
+import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertices/vertices_2.js";
+import { position_vertices_8, color_vertices_8, indices_8 } from "./libs/vertices/vertices_8.js";
 
 (function (global) {
   /*
@@ -154,6 +155,8 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
         horizontalDelta += horizontalSpeed;
       }
       mat4.translate(mm, mm, [horizontalDelta, 1.0, 0.0]);
+      mat4.rotateY(mm, mm, y2Theta);
+      mat4.rotateX(mm, mm, x2Theta);
       state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
 
       mat4.copy(mvp, state.pm);
@@ -170,15 +173,15 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
       aColor: {
         size: 3,
         offset: 0,
-        bufferData: new Float32Array(color_vertices_2),
+        bufferData: new Float32Array(color_vertices_8),
       },
       aPosition: {
         size: 3,
         offset: 0,
-        bufferData: new Float32Array(position_vertices_2),
+        bufferData: new Float32Array(position_vertices_8),
       },
     };
-    this.indices = new Uint8Array(indices_2);
+    this.indices = new Uint8Array(indices_8);
     this.state = {
       mm: mat4.create(),
       nm: null,
@@ -202,8 +205,8 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
         scaleDelta += scaleSpeed;
       }
       mat4.scale(mm, mm, [scaleDelta, scaleDelta, scaleDelta]);
-      mat4.rotateY(mm, mm, yTheta);
-      mat4.rotateX(mm, mm, xTheta);
+      mat4.rotateY(mm, mm, y2Theta);
+      mat4.rotateX(mm, mm, x2Theta);
       state.gl.uniformMatrix4fv(uModelMatrix, false, mm);
 
       mat4.copy(mvp, state.pm);
@@ -278,11 +281,13 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
   // Variabel Lokal
   var yTheta = 0.0;
   var xTheta = 0.0;
+  var y2Theta = 0.0;
+  var x2Theta = 0.0;
   var horizontalSpeed = 0.0228;
   var horizontalDelta = 0.0;
-  var freeze = true;
+  var freeze = false;
   var scaleSpeed = 0.0228;
-  var scaleDelta = 3.0;
+  var scaleDelta = 0.0;
 
   function updateState() {
     if (state.ui.pressedKeys[37]) {
@@ -298,6 +303,20 @@ import { position_vertices_2, color_vertices_2, indices_2 } from "./libs/vertice
     } else if (state.ui.pressedKeys[38]) {
       // up
       xTheta -= 0.05;
+    }
+    if (state.ui.pressedKeys[65]) {
+      // a
+      y2Theta -= 0.05;
+    } else if (state.ui.pressedKeys[68]) {
+      // d
+      y2Theta += 0.05;
+    }
+    if (state.ui.pressedKeys[87]) {
+      // w
+      x2Theta += 0.05;
+    } else if (state.ui.pressedKeys[83]) {
+      // s
+      x2Theta -= 0.05;
     }
     if (state.ui.pressedKeys[32]) {
       // space
