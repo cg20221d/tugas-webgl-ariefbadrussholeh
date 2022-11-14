@@ -200,7 +200,7 @@ import { position_vertices_8, color_vertices_8, indices_8 } from "./libs/vertice
 
       if (!freeze) {
         if (scaleDelta >= 2.0) scaleSpeed *= -1;
-        if (scaleDelta < 0.0) scaleSpeed *= -1;
+        if (scaleDelta < 0.5) scaleSpeed *= -1;
         console.log(scaleDelta);
         scaleDelta += scaleSpeed;
       }
@@ -287,7 +287,7 @@ import { position_vertices_8, color_vertices_8, indices_8 } from "./libs/vertice
   var horizontalDelta = 0.0;
   var freeze = false;
   var scaleSpeed = 0.0228;
-  var scaleDelta = 0.0;
+  var scaleDelta = 1.0;
 
   function updateState() {
     if (state.ui.pressedKeys[37]) {

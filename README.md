@@ -31,6 +31,8 @@ Untuk aplikasi Webgl dapat diakses melalui
 
 ![asd](/result2.gif)
 
+> Gambar mungkin berbeda karena perubahan
+
 #### Penyesuaian
 
 Terdapat beberapa penyesuaian dan penambahan yang saya lakukan yang berbeda dari penugasan sebelumnya
@@ -93,8 +95,10 @@ mat4.translate(mm, mm, [horizontalDelta, 1.0, 0.0]);
 - (Secara otomatis) Skalasikan objek digit kedua, memantul antara ukuran setengah dan dua kali lipat dengan kecepatan skalasi bebas (kalian tentukan sendiri).
 
 ```js
+var scaleDelta = 1.0;
+
 if (scaleDelta >= 2.0) scaleSpeed *= -1; // Jika ukuran mencapai 2 kali lipat
-if (scaleDelta < 0.5) scaleSpeed *= -1;
+if (scaleDelta < 0.5) scaleSpeed *= -1; // Jika ukuran mencapai setengah kali lipat
 
 scaleDelta += scaleSpeed;
 
