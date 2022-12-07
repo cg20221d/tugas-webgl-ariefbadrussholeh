@@ -245,6 +245,7 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     state.view = mat4.create();
     state.perspective = mat4.create();
     state.app.objects = [new LetterH(), new Number2(), new Box()];
+    state.lightPosition = [0.0, 0.0, 0.0];
   }
 
   /*
@@ -302,16 +303,20 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     if (state.ui.pressedKeys[74]) {
       // j
       x -= 0.1;
+      state.lightPosition[0] -= 0.1;
     } else if (state.ui.pressedKeys[76]) {
       // l
       x += 0.1;
+      state.lightPosition[0] += 0.1;
     }
     if (state.ui.pressedKeys[73]) {
       // i
       z += 0.1;
+      state.lightPosition[2] += 0.1;
     } else if (state.ui.pressedKeys[75]) {
       // k
       z -= 0.1;
+      state.lightPosition[2] -= 0.1;
     }
     if (state.ui.pressedKeys[32]) {
       // space
@@ -340,7 +345,7 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     state.gl.uniform3fv(uLightConstant, [1.0, 1.0, 1.0]); // warna sumber cahaya: putih
     state.gl.uniform1f(uAmbientIntensity, 0.528); // intensitas cahaya: 3 digit NRP + 300 = 228 + 300
     var uLightPosition = state.gl.getUniformLocation(state.programs[state.program], "uLightPosition");
-    state.gl.uniform3fv(uLightPosition, [0.0, 0.0, 0.0]);
+    state.gl.uniform3fv(uLightPosition, state.lightPosition);
 
     var camera = [state.app.eye.x, state.app.eye.y, state.app.eye.z];
     var uViewerPosition = state.gl.getUniformLocation(state.programs[state.program], "uViewerPosition");
