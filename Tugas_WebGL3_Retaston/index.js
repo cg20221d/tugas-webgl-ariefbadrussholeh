@@ -61,9 +61,9 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
 
       var n = this.indices.length;
 
-      var scale = 0.4;
+      var scale = 0.2;
       mat4.scale(model, model, [scale, scale, scale]);
-      mat4.rotateY(model, model, yTheta);
+      mat4.translate(model, model, [x, 0.0, z]);
 
       state.gl.uniformMatrix4fv(uModel, false, model);
       state.gl.uniformMatrix4fv(uView, false, state.view);
@@ -118,6 +118,7 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       mat4.scale(model, model, [scale, scale, scale]);
       mat4.translate(model, model, [1.0, -1.0, 0.0]);
       mat4.rotateX(model, model, xTheta);
+      mat4.rotateY(model, model, yTheta);
 
       state.gl.uniformMatrix4fv(uModel, false, model);
       state.gl.uniformMatrix4fv(uView, false, state.view);
@@ -263,11 +264,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
   var xTheta = 0.0;
   var y2Theta = 0.0;
   var x2Theta = 0.0;
-  var horizontalSpeed = 0.0228;
+  var horizontalSpeed = 0.01228;
   var horizontalDelta = 0.0;
+  var x = 0.0;
+  var z = 0.0;
   var freeze = false;
-  var scaleSpeed = 0.0228;
-  var scaleDelta = 1.0;
 
   function updateState() {
     if (state.ui.pressedKeys[37]) {
@@ -297,6 +298,20 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     } else if (state.ui.pressedKeys[83]) {
       // s
       x2Theta -= 0.05;
+    }
+    if (state.ui.pressedKeys[74]) {
+      // j
+      x -= 0.1;
+    } else if (state.ui.pressedKeys[76]) {
+      // l
+      x += 0.1;
+    }
+    if (state.ui.pressedKeys[73]) {
+      // i
+      z += 0.1;
+    } else if (state.ui.pressedKeys[75]) {
+      // k
+      z -= 0.1;
     }
     if (state.ui.pressedKeys[32]) {
       // space
