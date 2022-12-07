@@ -37,6 +37,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
         offset: 0,
         bufferData: new Float32Array(position_vertices_box),
       },
+      aNormal: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(normal_vertices_box),
+      },
     };
     this.indices = new Uint8Array(indices_box);
     this.state = {
@@ -64,6 +69,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       state.gl.uniformMatrix4fv(uView, false, state.view);
       state.gl.uniformMatrix4fv(uProjection, false, state.perspective);
 
+      var uNormalModel = state.gl.getUniformLocation(state.programs[state.program], "uNormalModel");
+      var normalModel = mat3.create();
+      mat3.normalFromMat4(normalModel, model);
+      state.gl.uniformMatrix3fv(uNormalModel, false, normalModel);
+
       state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
     };
   }
@@ -79,6 +89,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
         size: 3,
         offset: 0,
         bufferData: new Float32Array(position_vertices_h),
+      },
+      aNormal: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(normal_vertices_h),
       },
     };
     this.indices = new Uint8Array(indices_h);
@@ -108,6 +123,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       state.gl.uniformMatrix4fv(uView, false, state.view);
       state.gl.uniformMatrix4fv(uProjection, false, state.perspective);
 
+      var uNormalModel = state.gl.getUniformLocation(state.programs[state.program], "uNormalModel");
+      var normalModel = mat3.create();
+      mat3.normalFromMat4(normalModel, model);
+      state.gl.uniformMatrix3fv(uNormalModel, false, normalModel);
+
       state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
     };
   }
@@ -123,6 +143,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
         size: 3,
         offset: 0,
         bufferData: new Float32Array(position_vertices_2),
+      },
+      aNormal: {
+        size: 3,
+        offset: 0,
+        bufferData: new Float32Array(normal_vertices_2),
       },
     };
     this.indices = new Uint8Array(indices_2);
@@ -158,6 +183,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       state.gl.uniformMatrix4fv(uModel, false, model);
       state.gl.uniformMatrix4fv(uView, false, state.view);
       state.gl.uniformMatrix4fv(uProjection, false, state.perspective);
+
+      var uNormalModel = state.gl.getUniformLocation(state.programs[state.program], "uNormalModel");
+      var normalModel = mat3.create();
+      mat3.normalFromMat4(normalModel, model);
+      state.gl.uniformMatrix3fv(uNormalModel, false, normalModel);
 
       state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
     };
@@ -284,10 +314,12 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     mat4.perspective(state.perspective, (5 * Math.PI) / 12, 1.0, 0.5, 50.0);
 
     // Untuk pencahayaan dan pembayangan
-    var uAmbientConstant = state.gl.getUniformLocation(state.programs[state.program], "uAmbientConstant");
+    var uLightConstant = state.gl.getUniformLocation(state.programs[state.program], "uLightConstant");
     var uAmbientIntensity = state.gl.getUniformLocation(state.programs[state.program], "uAmbientIntensity");
-    state.gl.uniform3fv(uAmbientConstant, [1.0, 1.0, 1.0]); // warna sumber cahaya: putih
+    state.gl.uniform3fv(uLightConstant, [1.0, 1.0, 1.0]); // warna sumber cahaya: putih
     state.gl.uniform1f(uAmbientIntensity, 0.528); // intensitas cahaya: 3 digit NRP + 300 = 228 + 300
+    var uLightPosition = state.gl.getUniformLocation(state.programs[state.program], "uLightPosition");
+    state.gl.uniform3fv(uLightPosition, [0.0, 0.0, 0.0]);
 
     // Loop through each object and draw!
     state.app.objects.forEach(function (obj) {
