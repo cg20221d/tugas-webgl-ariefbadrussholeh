@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+}
+section {
+  position: absolute;
+  top: 9px;
+  left: 24px;
+  background-color: white;
+  padding: 16px 32px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+hr {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+dt {
+  font-weight: bold;
+}
+dd {
+  margin-bottom: 12px;
+}
+
+.bg-red {
+  background-color: red;
+}
+
+.bg-dark-red {
+  background-color: #c7141a;
+  color: white;
+}

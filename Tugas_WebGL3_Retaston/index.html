@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tugas Webgl #3: Retaston | Arief Badrus Sholeh</title>
+    <meta name="author" content="Arief Badrus Sholeh" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="bg-red">
+    <canvas id="glcanvas" width="720" height="720"></canvas>
+
+    <section class="bg-dark-red">
+      <h1>Tugas WebGL #3: Retaston</h1>
+      <hr />
+      <dl>
+        <dt>Nama</dt>
+        <dd>Arief Badrus Sholeh</dd>
+        <dt>NRP</dt>
+        <dd>5025201228</dd>
+        <dt>Kelas</dt>
+        <dd>Grafika Komputer D</dd>
+        <dt><a href="https://github.com/cg20221d/tugas-webgl-ariefbadrussholeh/tree/main/Tugas_Webgl2" style="color: inherit" target="_blank">Link Repository</a></dt>
+      </dl>
+    </section>
+
+    <!-- Shaders -->
+    <script name="shader" data-src="shaders/vertex.glsl" data-type="vertex" data-version="v1"></script>
+    <script name="shader" data-src="shaders/fragment.glsl" data-type="fragment" data-version="v1"></script>
+
+    <!-- Library: Signals processing used for dispatching methods -->
+    <script type="text/javascript" src="vendor/js/signals.js"></script>
+    <script type="text/javascript" src="vendor/js/glMatrix.js"></script>
+
+    <!-- Library: our common libraries -->
+    <script type="text/javascript" src="libs/glUtils.js"></script>
+    <script type="text/javascript" src="libs/uiUtils.js"></script>
+
+    <!-- This is the bulk of the actual WebGL stuff -->
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
