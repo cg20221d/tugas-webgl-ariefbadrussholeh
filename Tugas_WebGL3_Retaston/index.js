@@ -302,21 +302,21 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     }
     if (state.ui.pressedKeys[74]) {
       // j
-      x -= 0.1;
-      state.lightPosition[0] -= 0.1;
+      x -= 0.2;
+      state.lightPosition[0] -= 0.2;
     } else if (state.ui.pressedKeys[76]) {
       // l
-      x += 0.1;
-      state.lightPosition[0] += 0.1;
+      x += 0.2;
+      state.lightPosition[0] += 0.2;
     }
     if (state.ui.pressedKeys[73]) {
       // i
-      z += 0.1;
-      state.lightPosition[2] += 0.1;
+      z += 0.2;
+      state.lightPosition[2] += 0.2;
     } else if (state.ui.pressedKeys[75]) {
       // k
-      z -= 0.1;
-      state.lightPosition[2] -= 0.1;
+      z -= 0.2;
+      state.lightPosition[2] -= 0.2;
     }
     if (state.ui.pressedKeys[32]) {
       // space
