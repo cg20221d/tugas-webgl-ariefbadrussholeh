@@ -114,7 +114,7 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
 
       var n = this.indices.length;
 
-      var scale = 3.0;
+      var scale = 3.5;
       mat4.scale(model, model, [scale, scale, scale]);
       mat4.translate(model, model, [1.0, -1.0, 0.0]);
       mat4.rotateX(model, model, xTheta);
@@ -127,6 +127,9 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       var normalModel = mat3.create();
       mat3.normalFromMat4(normalModel, model);
       state.gl.uniformMatrix3fv(uNormalModel, false, normalModel);
+
+      var uShininessConstant = state.gl.getUniformLocation(state.programs[state.program], "uShininessConstant");
+      state.gl.uniform1f(uShininessConstant, 100.0); // logam
 
       state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
     };
@@ -168,11 +171,11 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
 
       var n = this.indices.length;
 
-      var scale = 3.0;
+      var scale = 3.5;
       mat4.scale(model, model, [scale, scale, scale]);
       if (!freeze) {
-        if (horizontalDelta >= 1.6) horizontalSpeed *= -1;
-        if (horizontalDelta <= -1.6) horizontalSpeed *= -1;
+        if (horizontalDelta >= 1.35) horizontalSpeed *= -1;
+        if (horizontalDelta <= -1.35) horizontalSpeed *= -1;
 
         horizontalDelta += horizontalSpeed;
       }
@@ -320,6 +323,10 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
     state.gl.uniform1f(uAmbientIntensity, 0.528); // intensitas cahaya: 3 digit NRP + 300 = 228 + 300
     var uLightPosition = state.gl.getUniformLocation(state.programs[state.program], "uLightPosition");
     state.gl.uniform3fv(uLightPosition, [0.0, 0.0, 0.0]);
+
+    var camera = [state.app.eye.x, state.app.eye.y, state.app.eye.z];
+    var uViewerPosition = state.gl.getUniformLocation(state.programs[state.program], "uViewerPosition");
+    state.gl.uniform3fv(uViewerPosition, camera);
 
     // Loop through each object and draw!
     state.app.objects.forEach(function (obj) {
