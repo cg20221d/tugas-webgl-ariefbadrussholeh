@@ -283,6 +283,12 @@ import { position_vertices_box, color_vertices_box, indices_box } from "./libs/v
     // Projection
     mat4.perspective(state.perspective, (5 * Math.PI) / 12, 1.0, 0.5, 50.0);
 
+    // Untuk pencahayaan dan pembayangan
+    var uAmbientConstant = state.gl.getUniformLocation(state.programs[state.program], "uAmbientConstant");
+    var uAmbientIntensity = state.gl.getUniformLocation(state.programs[state.program], "uAmbientIntensity");
+    state.gl.uniform3fv(uAmbientConstant, [1.0, 1.0, 1.0]); // warna sumber cahaya: putih
+    state.gl.uniform1f(uAmbientIntensity, 0.528); // intensitas cahaya: 3 digit NRP + 300 = 228 + 300
+
     // Loop through each object and draw!
     state.app.objects.forEach(function (obj) {
       obj.draw();
