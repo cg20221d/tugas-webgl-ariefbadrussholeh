@@ -192,6 +192,9 @@ import { position_vertices_box, normal_vertices_box, color_vertices_box, indices
       mat3.normalFromMat4(normalModel, model);
       state.gl.uniformMatrix3fv(uNormalModel, false, normalModel);
 
+      var uShininessConstant = state.gl.getUniformLocation(state.programs[state.program], "uShininessConstant");
+      state.gl.uniform1f(uShininessConstant, 10.0); // plastik
+
       state.gl.drawElements(state.gl.TRIANGLES, n, state.gl.UNSIGNED_BYTE, 0);
     };
   }
