@@ -12,6 +12,16 @@ var position_vertices_box = [
 ];
 
 // prettier-ignore
+var normal_vertices_box = [
+    0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 
+    0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 
+    -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 
+    0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 
+    0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 
+];
+
+// prettier-ignore
 var color_vertices_box = [
     1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,
     1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,
@@ -31,4 +41,4 @@ var indices_box = [
     20, 21, 22,  20, 22, 23   // Face F  
 ];
 
-export { position_vertices_box, color_vertices_box, indices_box };
+export { position_vertices_box, normal_vertices_box, color_vertices_box, indices_box };

@@ -1,6 +1,6 @@
-import { position_vertices_h, color_vertices_h, indices_h } from "./libs/vertices/vertices_h.js";
+import { position_vertices_h, normal_vertices_h, color_vertices_h, indices_h } from "./libs/vertices/vertices_h.js";
 import { position_vertices_2, normal_vertices_2, color_vertices_2, indices_2 } from "./libs/vertices/vertices_2.js";
-import { position_vertices_box, color_vertices_box, indices_box } from "./libs/vertices/vertices_box.js";
+import { position_vertices_box, normal_vertices_box, color_vertices_box, indices_box } from "./libs/vertices/vertices_box.js";
 
 (function (global) {
   /*

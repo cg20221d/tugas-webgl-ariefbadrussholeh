@@ -211,4 +211,4 @@ var indices_h = [
     60,61,62,   60,62,63
 ];
 
-export { position_vertices_h, color_vertices_h, indices_h };
+export { position_vertices_h, normal_vertices_h, color_vertices_h, indices_h };
